@@ -2,7 +2,7 @@
 import sys
 import subprocess
 
-def Usage():
+def usage():
     ''' Print usage and exit'''
     print('Usage: ' + sys.argv[0] + ' server(s)')
     sys.exit()
@@ -16,16 +16,16 @@ def main():
         # Even
         rows=len(args)/2
         columns=len(args)/2
-        compensation=1
+        even=1
     else:
         # Odd
         rows=len(args)/2+1
         columns=len(args)/2+1
-        compensation=0
+        even=0
 
     # Print usage if there's no arguments
     if len(args) == 0:
-        Usage()
+        usage()
 
     # Start compiling the applescript
     ascript = '''tell application "iTerm2"
@@ -43,9 +43,9 @@ def main():
     set p{} to (split horizontally with same profile)
   end tell
     '''.format(index, index+1)
-        index=index+1
+        index+=1
 
-    for i in range(1, columns+compensation):
+    for i in range(1, columns+even):
         ascript += '''
   tell p{}
     set p{} to (split vertically with same profile)
