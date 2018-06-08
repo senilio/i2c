@@ -13,12 +13,10 @@ def main():
 
     # Decide number of rows and columns in the iTerm2 window
     if len(args) % 2 == 0:
-        # Even
         rows=len(args)/2
         columns=len(args)/2
         even=1
     else:
-        # Odd
         rows=len(args)/2+1
         columns=len(args)/2+1
         even=0
@@ -28,39 +26,36 @@ def main():
         usage()
 
     # Start compiling the applescript
-    ascript = '''tell application "iTerm2"
-  tell current window
-    create window with default profile
-  end tell
-  set p1 to (current session of current window)
-'''
+    ascript  = 'tell application "iTerm2"\n'
+    ascript += '  tell current window\n'
+    ascript += '    create window with default profile\n'
+    ascript += '  end tell\n'
+    ascript += '  set p1 to (current session of current window)\n'
 
+    # Used for printing the number of horizontal panes
     index=1
 
+    # Create the horizontal panes
     for i in range(1, rows):
-        ascript += '''
-  tell p{}
-    set p{} to (split horizontally with same profile)
-  end tell
-    '''.format(index, index+1)
+        ascript += '  tell p{}\n'.format(index)
+        ascript += '    set p{} to (split horizontally with same profile)\n'.format(index+1)
+        ascript += '  end tell\n'
         index+=1
 
+    # Create the vertical panes
     for i in range(1, columns+even):
-        ascript += '''
-  tell p{}
-    set p{} to (split vertically with same profile)
-  end tell
-    '''.format(i, i+columns)
+        ascript += '  tell p{}\n'.format(i)
+        ascript += '    set p{} to (split vertically with same profile)\n'.format(i+columns)
+        ascript += '  end tell\n'
 
+    # Insert text into each pane
     for i in range(0, len(args)):
-        ascript += '''
-  tell p{}
-    write text "unset HISTFILE && ssh {}"
-  end tell
-    '''.format(i+1,args[i])
+        ascript += '  tell p{}\n'.format(i+1)
+        ascript += '    write text "unset HISTFILE && ssh {}"\n'.format(args[i])
+        ascript += '  end tell\n'
 
-    ascript += '''
-end tell'''
+    # Close the script
+    ascript += 'end tell'
 
     # Execute applescript
     subprocess.call(['osascript', '-e', ascript])
