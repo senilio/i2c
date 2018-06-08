@@ -54,11 +54,18 @@ def main():
         ascript += '    write text "unset HISTFILE && ssh {}"\n'.format(args[i])
         ascript += '  end tell\n'
 
+    # Enable broadcast
+    ascript += '  tell application "System Events"\n'
+    ascript += '    keystroke "i" using {command down, option down}\n'
+    ascript += '  end tell\n'
+
     # Close the script
     ascript += 'end tell'
 
     # Execute applescript
     subprocess.call(['osascript', '-e', ascript])
+
+
 
 if __name__ == '__main__':
     main()
