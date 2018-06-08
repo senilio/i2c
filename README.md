@@ -17,3 +17,5 @@ Examples:
 ```
 
 Currently accepts no flags :)
+
+Once you have a window with multiple sessions, hit ALT+CMD+i to send to all sessions in window.
