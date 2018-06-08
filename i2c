@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-from osascript import osascript
+import subprocess
 
 def Usage():
     ''' Print usage and exit'''
@@ -63,7 +63,7 @@ def main():
 end tell'''
 
     # Execute applescript
-    osascript(ascript)
+    subprocess.call(['osascript', '-e', ascript])
 
 if __name__ == '__main__':
     main()
