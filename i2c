@@ -5,7 +5,7 @@ import argparse
 
 def main():
 
-	# Start with parsing command line arguments
+	# Parse command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', metavar='port', type=int, help='Optional: Connect to this SSH port. Defalts to port 22.', required=False)
     parser.add_argument('-l', metavar='login', type=str, help='Optional: Connect as this SSH user. Defaults to current user.', required=False)
@@ -81,4 +81,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
