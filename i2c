@@ -1,29 +1,39 @@
 #!/usr/bin/env python
 import sys
 import subprocess
-
-def usage():
-    ''' Print usage and exit'''
-    print('Usage: ' + sys.argv[0] + ' server(s)')
-    sys.exit()
+import argparse
 
 def main():
-    # Just assume everything after argv[0] is servers to connect to
-    args=sys.argv[1:]
+
+	# Start with parsing command line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', metavar='port', type=int, help='Optional: Connect to this SSH port. Defalts to port 22.', required=False)
+    parser.add_argument('-l', metavar='login', type=str, help='Optional: Connect as this SSH user. Defaults to current user.', required=False)
+    parser.add_argument('-d', help='Enable debug output', action='store_true', required=False, default=False)
+    parser.add_argument('servers', nargs=argparse.REMAINDER)
+    args = parser.parse_args()
 
     # Decide number of rows and columns in the iTerm2 window
-    if len(args) % 2 == 0:
-        rows=len(args)/2
-        columns=len(args)/2
+    if len(args.servers) % 2 == 0:
+        rows=len(args.servers)/2
+        columns=len(args.servers)/2
         even=1
     else:
-        rows=len(args)/2+1
-        columns=len(args)/2+1
+        rows=len(args.servers)/2+1
+        columns=len(args.servers)/2+1
         even=0
 
-    # Print usage if there's no arguments
-    if len(args) == 0:
-        usage()
+    # Print help if there's no arguments
+    if len(args.servers) == 0:
+        parser.print_help()
+        sys.exit()
+
+    # Compile SSH arguments string
+    ssh_opts=''
+    if not args.l == None:
+        ssh_opts = ' '.join(['-l {}', ssh_opts]).format(args.l)
+    if not args.p == None:
+        ssh_opts = ' '.join(['-p {}', ssh_opts]).format(args.p)
 
     # Start compiling the applescript
     ascript  = 'tell application "iTerm2"\n'
@@ -49,9 +59,9 @@ def main():
         ascript += '  end tell\n'
 
     # Insert text into each pane
-    for i in range(0, len(args)):
+    for i in range(0, len(args.servers)):
         ascript += '  tell p{}\n'.format(i+1)
-        ascript += '    write text "unset HISTFILE && ssh {}"\n'.format(args[i])
+        ascript += '    write text "unset HISTFILE && ssh {}{}"\n'.format(ssh_opts, args.servers[i])
         ascript += '  end tell\n'
 
     # Enable broadcast
@@ -62,10 +72,12 @@ def main():
     # Close the script
     ascript += 'end tell'
 
+    # Display applescript if debug mode is enabled
+    if args.d:
+        print(ascript)
+
     # Execute applescript
     subprocess.call(['osascript', '-e', ascript])
-
-
 
 if __name__ == '__main__':
     main()
