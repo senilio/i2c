@@ -6,14 +6,14 @@ import argparse
 def main():
 
 	# Parse command line arguments
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-p', metavar='port', type=int, help='Optional: Connect to this SSH port. Defalts to port 22.', required=False)
-    parser.add_argument('-l', metavar='login', type=str, help='Optional: Connect as this SSH user. Defaults to current user.', required=False)
+    parser = argparse.ArgumentParser(description='i2c is a cluster ssh tool for iTerm2.')
+    parser.add_argument('-p', metavar='port', type=int, help='Connect to this SSH port. Obviously defaults to port 22.', required=False)
+    parser.add_argument('-l', metavar='login', type=str, help='Connect as this SSH user.', required=False)
     parser.add_argument('-d', help='Enable debug output', action='store_true', required=False, default=False)
     parser.add_argument('servers', nargs=argparse.REMAINDER)
     args = parser.parse_args()
 
-    # Decide number of rows and columns in the iTerm2 window
+    # Decide number of rows and columns
     if len(args.servers) % 2 == 0:
         rows=len(args.servers)/2
         columns=len(args.servers)/2
@@ -42,7 +42,7 @@ def main():
     ascript += '  end tell\n'
     ascript += '  set p1 to (current session of current window)\n'
 
-    # Used for printing the number of horizontal panes
+    # Used for printing the horizontal panes
     index=1
 
     # Create the horizontal panes
