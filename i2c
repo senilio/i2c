@@ -5,7 +5,7 @@ import argparse
 
 def main():
 
-	# Parse command line arguments
+    # Parse command line arguments
     parser = argparse.ArgumentParser(description='i2c is a cluster ssh tool for iTerm2.')
     parser.add_argument('-p', metavar='port', type=int, help='Connect to this SSH port. Obviously defaults to port 22.', required=False)
     parser.add_argument('-l', metavar='login', type=str, help='Connect as this SSH user.', required=False)
