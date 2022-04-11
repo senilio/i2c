@@ -7,7 +7,8 @@ I used to use https://github.com/wouterdebie/i2cssh for SSH clustering. It's dep
 Just download the package to your PATH, example:
 
 ```
-sudo curl -o /usr/local/bin/i2c https://raw.githubusercontent.com/senilio/i2c/master/i2c && sudo chmod +x /usr/local/bin/i2c
+sudo curl -o /usr/local/bin/i2c https://raw.githubusercontent.com/senilio/i2c/master/i2c && \
+sudo chmod +x /usr/local/bin/i2c
 ```
 
 ### Usage:
