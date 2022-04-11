@@ -11,6 +11,12 @@ sudo curl -o /usr/local/bin/i2c https://raw.githubusercontent.com/senilio/i2c/ma
 sudo chmod +x /usr/local/bin/i2c
 ```
 
+### iTerm2 Broadcast input:
+Be careful when broadcasting your keyboard strokes, as it's easy to uninstentionally mess up. See the following screenshot from iTerm2 for a description of the different broadcast modes plus keyboard combinations on how to enable and disable them.
+
+![iTerm2 Broadcast Input menu](assets/iTerm2-broadcast-keyboard-shortcuts.png)
+
+
 ### Usage:
 ```
 usage: i2c [-h] [-p port] [-l login] [-d] ...
