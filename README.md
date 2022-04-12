@@ -4,7 +4,7 @@ This tool will launch a new iTerm2 window and create split panes for each sessio
 I used to use https://github.com/wouterdebie/i2cssh for SSH clustering. It's dependant on Ruby and also tends to break on each OSX/Ruby upgrade. I got tired of this, so I made my own version which relies only on python (sys, subprocess, argparse) and the built in OSX osascript binary.
 
 ### Install:
-Just download the package to your PATH, example:
+Just download the script to your PATH, then make it executable. Example:
 
 ```
 sudo curl -o /usr/local/bin/i2c https://raw.githubusercontent.com/senilio/i2c/master/i2c && \
